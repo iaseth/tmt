@@ -59,13 +59,28 @@ def is_valid_hex_color(s: str) -> bool:
 		return False
 
 
-htmlcolors_json_path = 'data/htmlcolors.json'
-if os.path.isfile(htmlcolors_json_path):
-	with open(htmlcolors_json_path) as f:
-		htmlcolors = json.load(f)['colors']
-else:
-	htmlcolors = []
+def get_json(json_path):
+	if os.path.isfile(json_path):
+		with open(json_path) as f:
+			jo = json.load(f)
+		return jo
+	else:
+		return None
 
+htmlcolors_json = get_json('data/htmlcolors.json')
+htmlcolors = htmlcolors_json['colors'] if htmlcolors_json else []
+
+tailwindcolors_json = get_json('data/tailwindcolors.json')
+tailwindcolors = tailwindcolors_json['colors'] if tailwindcolors_json else []
+background_classes = {}
+foreground_classes = {}
+for palette in tailwindcolors:
+	name = palette['name']
+	for shade in palette['shades']:
+		bg_class_name = f"bg-{name}-{shade['shade']}"
+		fg_class_name = f"text-{name}-{shade['shade']}"
+		background_classes[bg_class_name] = shade['hex']
+		foreground_classes[fg_class_name] = shade['hex']
 
 def get_hex_color(arg: str) -> bool:
 	if arg[0] == '#' and len(arg) in [4, 7] and is_valid_hex_color(arg):
@@ -106,6 +121,7 @@ def set_terminal_setting(setting, value, profile_id):
 
 def main():
 	parser = argparse.ArgumentParser(description="Modify GNOME Terminal settings.")
+	parser.add_argument("-c", "--css", help="Set background / foreground via CSS class")
 	parser.add_argument("-b", "--background", help="Set terminal background color (e.g., '#000000')")
 	parser.add_argument("-f", "--foreground", help="Set terminal foreground color (e.g., '#ffffff')")
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
@@ -133,6 +149,18 @@ def main():
 			print(f"Foreground color set to {color}")
 		else:
 			print(f"Invalid color: '{args.foreground}'")
+
+	if args.css:
+		if args.css in background_classes:
+			color = background_classes[args.css]
+			set_terminal_setting("background-color", f"'{color}'", profile_id)
+			print(f"Background color set to '{color}'")
+		elif args.css in foreground_classes:
+			color = foreground_classes[args.css]
+			set_terminal_setting("foreground-color", f"'{color}'", profile_id)
+			print(f"Foreground color set to '{color}'")
+		else:
+			print(f"CSS class not found: '{args.css}'")
 
 	if args.transparency is not None:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
