@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import subprocess
 import sys
 
@@ -56,12 +57,19 @@ def is_valid_hex_color(s: str) -> bool:
 	except ValueError:
 		return False
 
+with open('data/htmlcolors.json') as f:
+	htmlcolors = json.load(f)['colors']
+
 def get_hex_color(arg: str) -> bool:
 	if arg[0] == '#' and len(arg) in [4, 7] and is_valid_hex_color(arg):
 		return arg
 
 	if arg[0] != '#' and len(arg) in [3, 6] and is_valid_hex_color(arg):
 		return f"#{arg}"
+
+	for color in htmlcolors:
+		if color['name'].lower() == arg.lower():
+			return color['code']
 
 	return None
 
