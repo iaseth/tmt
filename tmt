@@ -43,6 +43,29 @@ def verbose(*args, **kwargs):
 		print(*args, **kwargs)
 
 
+def is_valid_hex_color(s: str) -> bool:
+	if s.startswith("#"):
+		s = s[1:]  # Remove the '#' if it exists
+
+	if len(s) not in (3, 6):  # Hex colors should be 3 or 6 characters long
+		return False
+
+	try:
+		int(s, 16)  # Try converting to an integer base 16
+		return True
+	except ValueError:
+		return False
+
+def get_hex_color(arg: str) -> bool:
+	if arg[0] == '#' and len(arg) in [4, 7] and is_valid_hex_color(arg):
+		return arg
+
+	if arg[0] != '#' and len(arg) in [3, 6] and is_valid_hex_color(arg):
+		return f"#{arg}"
+
+	return None
+
+
 def get_default_profile():
 	"""Retrieve the default GNOME Terminal profile ID."""
 	try:
@@ -81,12 +104,20 @@ def main():
 	be_verbose = args.verbose
 
 	if args.background:
-		set_terminal_setting("background-color", f"'{args.background}'", profile_id)
-		print(f"Background color set to {args.background}")
+		color = get_hex_color(args.background)
+		if color:
+			set_terminal_setting("background-color", f"'{color}'", profile_id)
+			print(f"Background color set to {color}")
+		else:
+			print(f"Invalid color: '{args.background}'")
 
 	if args.foreground:
-		set_terminal_setting("foreground-color", f"'{args.foreground}'", profile_id)
-		print(f"Foreground color set to {args.foreground}")
+		color = get_hex_color(args.foreground)
+		if color:
+			set_terminal_setting("foreground-color", f"'{color}'", profile_id)
+			print(f"Foreground color set to {color}")
+		else:
+			print(f"Invalid color: '{args.foreground}'")
 
 	if args.transparency is not None:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
