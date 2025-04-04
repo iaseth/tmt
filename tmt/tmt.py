@@ -66,9 +66,11 @@ def print_current_values(profile_id: str):
 
 def main():
 	parser = argparse.ArgumentParser(description="Modify GNOME Terminal settings.")
-	parser.add_argument("-c", "--css", help="set background / foreground via Tailwind CSS bg-* and text-* class")
 	parser.add_argument("-b", "--background", help="set terminal background color (e.g., '#000000')")
 	parser.add_argument("-f", "--foreground", help="set terminal foreground color (e.g., '#ffffff')")
+	parser.add_argument("-c", "--css", help="set background / foreground via Tailwind CSS bg-* and text-* class")
+	parser.add_argument("-d", "--default", action="store_true", help="set to white text on opaque black background")
+
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
 	parser.add_argument("-z", "--fontsize", type=int, help="set terminal font size")
@@ -108,6 +110,13 @@ def main():
 			print(f"Foreground color set to '{color}'")
 		else:
 			print(f"CSS class not found: '{args.css}'")
+
+	if args.default:
+		set_terminal_setting("background-color", f"'#000'", profile_id)
+		set_terminal_setting("foreground-color", f"'#fff'", profile_id)
+		set_terminal_setting("use-transparent-background", "false", profile_id)
+		set_terminal_setting("background-transparency-percent", '0', profile_id)
+		print(f"Set colors to white on black with no transparency.")
 
 	if args.transparency is not None:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
