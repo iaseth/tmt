@@ -40,13 +40,13 @@ def set_terminal_setting(setting, value, profile_id):
 
 def main():
 	parser = argparse.ArgumentParser(description="Modify GNOME Terminal settings.")
-	parser.add_argument("-c", "--css", help="Set background / foreground via CSS class")
-	parser.add_argument("-b", "--background", help="Set terminal background color (e.g., '#000000')")
-	parser.add_argument("-f", "--foreground", help="Set terminal foreground color (e.g., '#ffffff')")
+	parser.add_argument("-c", "--css", help="set background / foreground via Tailwind CSS bg-* and text-* class")
+	parser.add_argument("-b", "--background", help="set terminal background color (e.g., '#000000')")
+	parser.add_argument("-f", "--foreground", help="set terminal foreground color (e.g., '#ffffff')")
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
-		help="Set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
-	parser.add_argument("-z", "--fontsize", type=int, help="Set terminal font size")
-	parser.add_argument("-v", "--verbose", action="store_true", help="Enable verbose output")
+		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
+	parser.add_argument("-z", "--fontsize", type=int, help="set terminal font size")
+	parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
 	args = parser.parse_args()
 
 	profile_id = get_default_profile()
