@@ -9,6 +9,14 @@ from pytmt.colorutils import get_hex_color
 
 
 
+PROP_NAMES = [
+	'background-color', 'foreground-color',
+	'highlight-background-color', 'highlight-foreground-color',
+	'use-transparent-background', 'background-transparency-percent',
+	'default-size-rows', 'default-size-columns',
+	'cell-height-scale', 'cell-width-scale',
+]
+
 be_verbose = False
 def verbose(*args, **kwargs):
 	if be_verbose:
@@ -27,8 +35,11 @@ def get_default_profile():
 		print("Error: Could not retrieve GNOME Terminal profile ID.")
 		sys.exit(1)
 
-def set_terminal_setting(setting, value, profile_id):
-	profile = f"org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{profile_id}/"
+def get_full_profile(profile_id: str):
+	return f"org.gnome.Terminal.Legacy.Profile:/org/gnome/terminal/legacy/profiles:/:{profile_id}/"
+
+def set_terminal_setting(setting: str, value, profile_id: str):
+	profile = get_full_profile(profile_id)
 	command = [
 		"gsettings", "set", profile,
 		setting, str(value)
@@ -36,6 +47,21 @@ def set_terminal_setting(setting, value, profile_id):
 	"""Apply GNOME Terminal settings using gsettings."""
 	verbose(f"$ {green(' '.join(command))}")
 	subprocess.run(command)
+
+def get_terminal_setting(setting: str, profile_id: str) -> str:
+	profile = get_full_profile(profile_id)
+	command = [ "gsettings", "get", profile, setting ]
+	verbose(f"$ {green(' '.join(command))}")
+
+	value = subprocess.check_output(command, universal_newlines=True).strip()
+	return value
+
+
+def print_current_values(profile_id: str):
+	print(f"Profile Id: '{profile_id}'")
+	for i, prop_name in enumerate(PROP_NAMES, start=1):
+		value = get_terminal_setting(prop_name, profile_id)
+		print(f"\t{i:2}. {prop_name:40} ---- {value}")
 
 
 def main():
@@ -46,6 +72,8 @@ def main():
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
 	parser.add_argument("-z", "--fontsize", type=int, help="set terminal font size")
+
+	parser.add_argument("-p", "--print", action="store_true", help="print current values")
 	parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
 	args = parser.parse_args()
 
@@ -90,6 +118,9 @@ def main():
 		font_setting = f"Monospace {args.fontsize}"
 		subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "monospace-font-name", font_setting])
 		print(f"Font size set to {args.fontsize}")
+
+	if args.print:
+		print_current_values(profile_id)
 
 
 if __name__ == "__main__":
