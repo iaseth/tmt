@@ -5,38 +5,9 @@ import os
 import subprocess
 import sys
 
+from pytmt.printutils import *
+from pytmt.utils import get_json, is_valid_hex_color
 
-
-def _colorize(color_code, *args, sep=' '):
-	"""
-	Returns a colored string using ANSI escape codes.
-	"""
-	text = sep.join(map(str, args))
-	return f"\033[{color_code}m{text}\033[0m"
-
-def red(*args, sep=' '):
-	return _colorize(31, *args, sep=sep)
-
-def green(*args, sep=' '):
-	return _colorize(32, *args, sep=sep)
-
-def yellow(*args, sep=' '):
-	return _colorize(33, *args, sep=sep)
-
-def blue(*args, sep=' '):
-	return _colorize(34, *args, sep=sep)
-
-def magenta(*args, sep=' '):
-	return _colorize(35, *args, sep=sep)
-
-def cyan(*args, sep=' '):
-	return _colorize(36, *args, sep=sep)
-
-def white(*args, sep=' '):
-	return _colorize(37, *args, sep=sep)
-
-def normal(*args, sep=' '):
-	return sep.join(map(str, args))
 
 
 be_verbose = False
@@ -44,28 +15,6 @@ def verbose(*args, **kwargs):
 	if be_verbose:
 		print(*args, **kwargs)
 
-
-def is_valid_hex_color(s: str) -> bool:
-	if s.startswith("#"):
-		s = s[1:]  # Remove the '#' if it exists
-
-	if len(s) not in (3, 6):  # Hex colors should be 3 or 6 characters long
-		return False
-
-	try:
-		int(s, 16)  # Try converting to an integer base 16
-		return True
-	except ValueError:
-		return False
-
-
-def get_json(json_path):
-	if os.path.isfile(json_path):
-		with open(json_path) as f:
-			jo = json.load(f)
-		return jo
-	else:
-		return None
 
 htmlcolors_json = get_json('data/htmlcolors.json')
 htmlcolors = htmlcolors_json['colors'] if htmlcolors_json else []
