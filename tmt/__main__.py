@@ -1,12 +1,11 @@
 #!/usr/bin/env python3
 import argparse
-import json
-import os
 import subprocess
 import sys
 
+from pytmt.data import background_classes, foreground_classes
 from pytmt.printutils import *
-from pytmt.utils import get_json, is_valid_hex_color
+from pytmt.colorutils import get_hex_color
 
 
 
@@ -14,35 +13,6 @@ be_verbose = False
 def verbose(*args, **kwargs):
 	if be_verbose:
 		print(*args, **kwargs)
-
-
-htmlcolors_json = get_json('data/htmlcolors.json')
-htmlcolors = htmlcolors_json['colors'] if htmlcolors_json else []
-
-tailwindcolors_json = get_json('data/tailwindcolors.json')
-tailwindcolors = tailwindcolors_json['colors'] if tailwindcolors_json else []
-background_classes = {}
-foreground_classes = {}
-for palette in tailwindcolors:
-	name = palette['name']
-	for shade in palette['shades']:
-		bg_class_name = f"bg-{name}-{shade['shade']}"
-		fg_class_name = f"text-{name}-{shade['shade']}"
-		background_classes[bg_class_name] = shade['hex']
-		foreground_classes[fg_class_name] = shade['hex']
-
-def get_hex_color(arg: str) -> bool:
-	if arg[0] == '#' and len(arg) in [4, 7] and is_valid_hex_color(arg):
-		return arg
-
-	if arg[0] != '#' and len(arg) in [3, 6] and is_valid_hex_color(arg):
-		return f"#{arg}"
-
-	for color in htmlcolors:
-		if color['name'].lower() == arg.lower():
-			return color['code']
-
-	return None
 
 
 def get_default_profile():
