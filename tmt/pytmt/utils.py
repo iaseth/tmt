@@ -1,14 +1,14 @@
 import json
-import os
+import pkgutil
 
 
 
 def get_json(json_path):
-	if os.path.isfile(json_path):
-		with open(json_path) as f:
-			jo = json.load(f)
-		return jo
-	else:
+	try:
+		data = pkgutil.get_data(__name__, json_path)
+		return json.loads(data.decode("utf-8"))
+	except Exception as e:
+		print(e)
 		return None
 
 
