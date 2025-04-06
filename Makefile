@@ -1,7 +1,7 @@
 
 build: zip exe
 
-zip:
+zip: clean
 	cd tmt && zip -r ../tmt-temp.zip . -x "*/__pycache__/*"
 
 exe:
@@ -13,4 +13,5 @@ deploy: build
 
 clean:
 	rm -f tmt-temp.zip tmt.zip
-	rm -rf **/__pycache__
+	rm -rf tmt/**/*.pyc
+	rm -rf tmt/**/__pycache__

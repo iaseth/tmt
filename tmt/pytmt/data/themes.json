@@ -1,0 +1,252 @@
+[
+	{
+		"name": "Andromeda",
+		"background": "#1a1c2c",
+		"foreground": "#e1e1e6"
+	},
+	{
+		"name": "Atom One Dark Theme",
+		"background": "#282c34",
+		"foreground": "#abb2bf"
+	},
+	{
+		"name": "Atom One Light",
+		"background": "#fafafa",
+		"foreground": "#383a42"
+	},
+	{
+		"name": "Ayu",
+		"background": "#0f1419",
+		"foreground": "#b3b1ad"
+	},
+	{
+		"name": "Base16 Dark",
+		"background": "#181818",
+		"foreground": "#d8d8d8"
+	},
+	{
+		"name": "Bluloco Dark",
+		"background": "#1e1e1e",
+		"foreground": "#d4d4d4"
+	},
+	{
+		"name": "Catppuccin Mocha",
+		"background": "#1e1e2e",
+		"foreground": "#cdd6f4"
+	},
+	{
+		"name": "Cobalt2",
+		"background": "#193549",
+		"foreground": "#ffffff"
+	},
+	{
+		"name": "Dark+",
+		"background": "#1e1e1e",
+		"foreground": "#d4d4d4"
+	},
+	{
+		"name": "Darcula",
+		"background": "#2b2b2b",
+		"foreground": "#a9b7c6"
+	},
+	{
+		"name": "Dracula Official",
+		"background": "#282a36",
+		"foreground": "#f8f8f2"
+	},
+	{
+		"name": "Firewatch",
+		"background": "#2b2b2b",
+		"foreground": "#f8f8f2"
+	},
+	{
+		"name": "Flate",
+		"background": "#1f1f1f",
+		"foreground": "#dcdcdc"
+	},
+	{
+		"name": "GitHub Dark",
+		"background": "#0d1117",
+		"foreground": "#c9d1d9"
+	},
+	{
+		"name": "GitHub Theme Dark",
+		"background": "#0d1117",
+		"foreground": "#c9d1d9"
+	},
+	{
+		"name": "GitHub Theme Light",
+		"background": "#ffffff",
+		"foreground": "#24292e"
+	},
+	{
+		"name": "Gruvbox Dark",
+		"background": "#282828",
+		"foreground": "#ebdbb2"
+	},
+	{
+		"name": "Gruvbox Light",
+		"background": "#fbf1c7",
+		"foreground": "#3c3836"
+	},
+	{
+		"name": "Hopscotch",
+		"background": "#322931",
+		"foreground": "#d5d3d5"
+	},
+	{
+		"name": "Horizon Dark",
+		"background": "#1C1E26",
+		"foreground": "#E95678"
+	},
+	{
+		"name": "Light+",
+		"background": "#ffffff",
+		"foreground": "#000000"
+	},
+	{
+		"name": "Lucario",
+		"background": "#2b3e50",
+		"foreground": "#f8f8f2"
+	},
+	{
+		"name": "Material Theme",
+		"background": "#263238",
+		"foreground": "#eeffff"
+	},
+	{
+		"name": "Monokai",
+		"background": "#272822",
+		"foreground": "#F8F8F2"
+	},
+	{
+		"name": "Monokai Pro",
+		"background": "#2d2a2e",
+		"foreground": "#fcfcfa"
+	},
+	{
+		"name": "Nebula",
+		"background": "#222436",
+		"foreground": "#c8d3f5"
+	},
+	{
+		"name": "Night Owl",
+		"background": "#011627",
+		"foreground": "#d6deeb"
+	},
+	{
+		"name": "Noctis",
+		"background": "#1b1d26",
+		"foreground": "#a0a8cd"
+	},
+	{
+		"name": "Nord",
+		"background": "#2e3440",
+		"foreground": "#d8dee9"
+	},
+	{
+		"name": "Oceanic Next",
+		"background": "#1b2b34",
+		"foreground": "#d8dee9"
+	},
+	{
+		"name": "Omni",
+		"background": "#191622",
+		"foreground": "#e1e1e6"
+	},
+	{
+		"name": "One Dark Pro",
+		"background": "#282c34",
+		"foreground": "#abb2bf"
+	},
+	{
+		"name": "One Monokai",
+		"background": "#222222",
+		"foreground": "#f8f8f2"
+	},
+	{
+		"name": "Palenight",
+		"background": "#292D3E",
+		"foreground": "#A6ACCD"
+	},
+	{
+		"name": "Panda",
+		"background": "#292a2b",
+		"foreground": "#e6e6e6"
+	},
+	{
+		"name": "Poimandres",
+		"background": "#1b1e28",
+		"foreground": "#a6accd"
+	},
+	{
+		"name": "Rose Pine",
+		"background": "#191724",
+		"foreground": "#e0def4"
+	},
+	{
+		"name": "Shades of Purple",
+		"background": "#2d2b55",
+		"foreground": "#a599e9"
+	},
+	{
+		"name": "Slack Theme",
+		"background": "#2c2d30",
+		"foreground": "#dddddd"
+	},
+	{
+		"name": "Solarized Dark",
+		"background": "#002b36",
+		"foreground": "#839496"
+	},
+	{
+		"name": "Solarized Light",
+		"background": "#fdf6e3",
+		"foreground": "#657b83"
+	},
+	{
+		"name": "Spacegray",
+		"background": "#2b303b",
+		"foreground": "#c0c5ce"
+	},
+	{
+		"name": "SynthWave 84",
+		"background": "#2a2139",
+		"foreground": "#f92aad"
+	},
+	{
+		"name": "Tokyo Night",
+		"background": "#1a1b26",
+		"foreground": "#c0caf5"
+	},
+	{
+		"name": "Tomorrow",
+		"background": "#ffffff",
+		"foreground": "#4d4d4c"
+	},
+	{
+		"name": "Tomorrow Night",
+		"background": "#1d1f21",
+		"foreground": "#c5c8c6"
+	},
+	{
+		"name": "Tomorrow Night Blue",
+		"background": "#002451",
+		"foreground": "#ffffff"
+	},
+	{
+		"name": "Tomorrow Night Bright",
+		"background": "#000000",
+		"foreground": "#eaeaea"
+	},
+	{
+		"name": "Tomorrow Night Eighties",
+		"background": "#2d2d2d",
+		"foreground": "#cccccc"
+	},
+	{
+		"name": "Winter Is Coming",
+		"background": "#1e1e1e",
+		"foreground": "#dcdcdc"
+	}
+]

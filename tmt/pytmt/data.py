@@ -18,4 +18,4 @@ for palette in tailwindcolors:
 		background_classes[bg_class_name] = shade['hex']
 		foreground_classes[fg_class_name] = shade['hex']
 
-
+themes = get_json('data/themes.json')
