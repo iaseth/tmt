@@ -9,6 +9,8 @@ from pytmt.colorutils import get_hex_color
 
 
 
+NOT_SPECIFIED = 'not-specified'
+
 PROP_NAMES = [
 	'background-color', 'foreground-color',
 	'highlight-background-color', 'highlight-foreground-color',
@@ -70,7 +72,8 @@ def main():
 	parser.add_argument("-f", "--foreground", help="set terminal foreground color (e.g., '#ffffff')")
 	parser.add_argument("-c", "--css", help="set background / foreground via Tailwind CSS bg-* and text-* class")
 	parser.add_argument("-d", "--default", action="store_true", help="set to white text on opaque black background")
-	parser.add_argument("--theme", type=str, help="set colors via theme")
+
+	parser.add_argument("--theme", type=str, nargs='?', const=NOT_SPECIFIED, help="set colors via theme")
 
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
@@ -123,15 +126,20 @@ def main():
 		print(f"Set colors to white on black with no transparency.")
 
 	if args.theme:
-		for theme in themes:
-			if args.theme.lower() == theme['name'].lower():
-				print(f"Theme was found: '{args.theme}'")
-				set_terminal_setting("background-color", f"'{theme['background']}'", profile_id)
-				set_terminal_setting("foreground-color", f"'{theme['foreground']}'", profile_id)
-				break
+		if args.theme == NOT_SPECIFIED:
+			print(f" #  {'THEME':25} BACKGROUND FOREGROUND")
+			for i, theme in enumerate(themes, start=1):
+				print(f"{i:2}. {theme['name']:25} {theme['background']:10} {theme['foreground']:10}")
 		else:
-			print(f"Theme NOT found: '{args.theme}'")
-			return
+			for theme in themes:
+				if args.theme.lower() == theme['name'].lower():
+					print(f"Theme was found: '{args.theme}'")
+					set_terminal_setting("background-color", f"'{theme['background']}'", profile_id)
+					set_terminal_setting("foreground-color", f"'{theme['foreground']}'", profile_id)
+					break
+			else:
+				print(f"Theme NOT found: '{args.theme}'")
+				return
 
 	if args.opaque:
 		set_terminal_setting("use-transparent-background", "false", profile_id)
