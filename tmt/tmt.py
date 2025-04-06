@@ -6,7 +6,7 @@ import sys
 
 from pytmt.data import background_classes, foreground_classes, themes
 from pytmt.printutils import *
-from pytmt.colorutils import get_hex_color
+from pytmt.colorutils import get_hex_color, print_colored
 
 
 
@@ -138,9 +138,10 @@ def main():
 				return
 
 	if args.theme and args.theme == NOT_SPECIFIED:
-		print(f" #  {'THEME':25} BACKGROUND FOREGROUND")
+		print(f"   #  {'THEME':25} BACKGROUND FOREGROUND")
 		for i, theme in enumerate(themes, start=1):
-			print(f"{i:2}. {theme['name']:25} {theme['background']:10} {theme['foreground']:10}")
+			print_colored(f"  {i:2}. {theme['name']:25} {theme['background']:10} {theme['foreground']:10}",
+				foreground=theme['foreground'], background=theme['background'])
 	elif args.theme:
 		for i, theme in enumerate(themes, start=1):
 			if args.theme.lower() == theme['name'].lower() or args.theme == str(i):

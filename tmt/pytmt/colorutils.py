@@ -16,7 +16,6 @@ def is_valid_hex_color(s: str) -> bool:
 		return False
 
 
-
 def get_hex_color(arg: str) -> bool:
 	if arg[0] == '#' and len(arg) in [4, 7] and is_valid_hex_color(arg):
 		return arg
@@ -29,5 +28,22 @@ def get_hex_color(arg: str) -> bool:
 			return color['code']
 
 	return None
+
+
+def hex_to_rgb(hex_color):
+	hex_color = hex_color.lstrip("#")
+	return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+
+def print_colored(message, foreground="#FFFFFF", background="#000000"):
+	fg = hex_to_rgb(foreground)
+	bg = hex_to_rgb(background)
+
+	ansi_code = (
+		f"\033[38;2;{fg[0]};{fg[1]};{fg[2]}m"
+		f"\033[48;2;{bg[0]};{bg[1]};{bg[2]}m"
+	)
+
+	reset = "\033[0m"
+	print(f"{ansi_code}{message}{reset}")
 
 
