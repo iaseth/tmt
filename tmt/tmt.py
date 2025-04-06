@@ -70,10 +70,10 @@ def main():
 	parser = argparse.ArgumentParser(description="Modify GNOME Terminal settings.")
 	parser.add_argument("-b", "--background", help="set terminal background color (e.g., '#000000')")
 	parser.add_argument("-f", "--foreground", help="set terminal foreground color (e.g., '#ffffff')")
-	parser.add_argument("-c", "--css", help="set background / foreground via Tailwind CSS bg-* and text-* class")
 	parser.add_argument("-d", "--default", action="store_true", help="set to white text on opaque black background")
 
-	parser.add_argument("--theme", type=str, nargs='?', const=NOT_SPECIFIED, help="set colors via theme")
+	parser.add_argument("-c", "--css", nargs='+', help="set background / foreground via Tailwind CSS bg-* and text-* class")
+	parser.add_argument("--theme", nargs='?', const=NOT_SPECIFIED, help="set colors via theme")
 
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
@@ -106,24 +106,26 @@ def main():
 		else:
 			print(f"Invalid color: '{args.foreground}'")
 
-	if args.css:
-		if args.css in background_classes:
-			color = background_classes[args.css]
-			set_terminal_setting("background-color", f"'{color}'", profile_id)
-			print(f"Background color set to '{color}'")
-		elif args.css in foreground_classes:
-			color = foreground_classes[args.css]
-			set_terminal_setting("foreground-color", f"'{color}'", profile_id)
-			print(f"Foreground color set to '{color}'")
-		else:
-			print(f"CSS class not found: '{args.css}'")
-
 	if args.default:
 		set_terminal_setting("background-color", f"'#000'", profile_id)
 		set_terminal_setting("foreground-color", f"'#fff'", profile_id)
 		set_terminal_setting("use-transparent-background", "false", profile_id)
 		set_terminal_setting("background-transparency-percent", '0', profile_id)
 		print(f"Set colors to white on black with no transparency.")
+
+	if args.css:
+		for class_name in args.css:
+			if class_name in background_classes:
+				color = background_classes[class_name]
+				set_terminal_setting("background-color", f"'{color}'", profile_id)
+				print(f"Background color set to '{color}'")
+			elif class_name in foreground_classes:
+				color = foreground_classes[class_name]
+				set_terminal_setting("foreground-color", f"'{color}'", profile_id)
+				print(f"Foreground color set to '{color}'")
+			else:
+				print(f"CSS class not found: '{class_name}'")
+				return
 
 	if args.theme:
 		if args.theme == NOT_SPECIFIED:
@@ -135,7 +137,9 @@ def main():
 				if args.theme.lower() == theme['name'].lower():
 					print(f"Theme was found: '{args.theme}'")
 					set_terminal_setting("background-color", f"'{theme['background']}'", profile_id)
+					print(f"\tBackground color set to '{theme['background']}'")
 					set_terminal_setting("foreground-color", f"'{theme['foreground']}'", profile_id)
+					print(f"\tForeground color set to '{theme['foreground']}'")
 					break
 			else:
 				print(f"Theme NOT found: '{args.theme}'")
