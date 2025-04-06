@@ -75,6 +75,9 @@ def main():
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
 	parser.add_argument("-z", "--fontsize", type=int, help="set terminal font size")
 
+	parser.add_argument("--opaque", action="store_true", help="turn off transparency")
+	parser.add_argument("--transparent", action="store_true", help="turn on transparency")
+
 	parser.add_argument("-p", "--print", action="store_true", help="print current values")
 	parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
 	args = parser.parse_args()
@@ -118,7 +121,11 @@ def main():
 		set_terminal_setting("background-transparency-percent", '0', profile_id)
 		print(f"Set colors to white on black with no transparency.")
 
-	if args.transparency is not None:
+	if args.opaque:
+		set_terminal_setting("use-transparent-background", "false", profile_id)
+	elif args.transparent:
+		set_terminal_setting("use-transparent-background", "true", profile_id)
+	elif args.transparency is not None:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
 		set_terminal_setting("background-transparency-percent", args.transparency, profile_id)
 		print(f"Transparency set to {args.transparency}%")
