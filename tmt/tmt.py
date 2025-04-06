@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import argparse
+import random
 import subprocess
 import sys
 
@@ -59,6 +60,14 @@ def get_terminal_setting(setting: str, profile_id: str) -> str:
 	return value
 
 
+def set_theme(theme, profile_id: str):
+	print(f"Setting theme to {theme['name']}:")
+	set_terminal_setting("background-color", f"'{theme['background']}'", profile_id)
+	print(f"\tBackground color set to '{theme['background']}'")
+	set_terminal_setting("foreground-color", f"'{theme['foreground']}'", profile_id)
+	print(f"\tForeground color set to '{theme['foreground']}'")
+
+
 def print_current_values(profile_id: str):
 	print(f"Profile Id: '{profile_id}'")
 	for i, prop_name in enumerate(PROP_NAMES, start=1):
@@ -74,6 +83,7 @@ def main():
 
 	parser.add_argument("-c", "--css", nargs='+', help="set background / foreground via Tailwind CSS bg-* and text-* class")
 	parser.add_argument("--theme", nargs='?', const=NOT_SPECIFIED, help="set colors via theme")
+	parser.add_argument("--random", action="store_true", help="set a random theme")
 
 	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
@@ -127,23 +137,22 @@ def main():
 				print(f"CSS class not found: '{class_name}'")
 				return
 
-	if args.theme:
-		if args.theme == NOT_SPECIFIED:
-			print(f" #  {'THEME':25} BACKGROUND FOREGROUND")
-			for i, theme in enumerate(themes, start=1):
-				print(f"{i:2}. {theme['name']:25} {theme['background']:10} {theme['foreground']:10}")
+	if args.theme and args.theme == NOT_SPECIFIED:
+		print(f" #  {'THEME':25} BACKGROUND FOREGROUND")
+		for i, theme in enumerate(themes, start=1):
+			print(f"{i:2}. {theme['name']:25} {theme['background']:10} {theme['foreground']:10}")
+	elif args.theme:
+		for i, theme in enumerate(themes, start=1):
+			if args.theme.lower() == theme['name'].lower() or args.theme == str(i):
+				set_theme(theme, profile_id)
+				break
 		else:
-			for theme in themes:
-				if args.theme.lower() == theme['name'].lower():
-					print(f"Theme was found: '{args.theme}'")
-					set_terminal_setting("background-color", f"'{theme['background']}'", profile_id)
-					print(f"\tBackground color set to '{theme['background']}'")
-					set_terminal_setting("foreground-color", f"'{theme['foreground']}'", profile_id)
-					print(f"\tForeground color set to '{theme['foreground']}'")
-					break
-			else:
-				print(f"Theme NOT found: '{args.theme}'")
-				return
+			print(f"Theme NOT found: '{args.theme}'")
+			return
+	elif args.random:
+		print(f"Selecting a random theme!")
+		number = random.randint(0, 49)
+		set_theme(themes[number], profile_id)
 
 	if args.opaque:
 		set_terminal_setting("use-transparent-background", "false", profile_id)
