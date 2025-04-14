@@ -1,6 +1,12 @@
 
 build: zip exe
 
+release: build
+	cp tmt.zip build/tmt
+
+install: build
+	cp tmt.zip ~/.local/bin/tmt
+
 zip: clean
 	cd tmt && zip -r ../tmt-temp.zip . -x "*/__pycache__/*"
 

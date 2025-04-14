@@ -9,7 +9,6 @@
 - **Set Foreground Color**: Adjust the text color using a desired hex value.
 - **Adjust Transparency**: Modify the terminal's transparency level within a range of 0% (opaque) to 100% (fully transparent).
 - **Change Font Size**: Update the terminal's font size to improve readability.
-- **Verbose Output**: Enable detailed output to monitor the changes being applied.
 
 ## Prerequisites
 
@@ -19,25 +18,20 @@
 
 ## Installation
 
-1. **Clone the Repository**:
-   ```bash
-   git clone https://github.com/iaseth/tmt.git
-   ```
-2. **Navigate to the Directory**:
-   ```bash
-   cd tmt
-   ```
-3. **Make the Script Executable**:
-   ```bash
-   chmod +x tmt
-   ```
+Just run the following in your terminal and you are good to go.
+This just fetches the `tmt` (zipped executable release) from the repo,
+and adds it to your `PATH`.
+
+```bash
+wget https://raw.githubusercontent.com/iaseth/tmt/refs/heads/master/build/tmt && chmod +x tmt && cp tmt ~/.local/bin
+```
 
 ## Usage
 
 Run the script with the desired options to customize your GNOME Terminal settings:
 
 ```bash
-./tmt [options]
+tmt [options]
 ```
 
 ### Options
@@ -52,7 +46,7 @@ Run the script with the desired options to customize your GNOME Terminal setting
 
 - **Change Background and Foreground Colors**:
   ```bash
-  ./tmt -b #1d1f21 -f #c5c8c6
+  ./tmt -b "#1d1f21" -f "#c5c8c6"
   ```
   Sets the background color to a dark shade (`#1d1f21`) and the foreground (text) color to a light grey (`#c5c8c6`).
 
@@ -67,6 +61,21 @@ Run the script with the desired options to customize your GNOME Terminal setting
   ./tmt -z 14 -v
   ```
   Sets the font size to 14 and enables verbose output to display the actions being performed.
+
+## Build it Yourself
+
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/iaseth/tmt.git
+   ```
+2. **Navigate to the Directory**:
+   ```bash
+   cd tmt
+   ```
+3. **Run the script**:
+   ```bash
+   python3 tmt -p
+   ```
 
 ## Notes
 
