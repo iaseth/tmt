@@ -17,7 +17,7 @@ PROP_NAMES = [
 	'highlight-background-color', 'highlight-foreground-color',
 	'use-transparent-background', 'background-transparency-percent',
 	'default-size-rows', 'default-size-columns',
-	'cell-height-scale', 'cell-width-scale', 'font'
+	'cell-height-scale', 'cell-width-scale'
 ]
 
 be_verbose = False
@@ -51,9 +51,8 @@ def set_terminal_setting(setting: str, value, profile_id: str):
 	verbose(f"$ {green(' '.join(command))}")
 	subprocess.run(command)
 
-def get_terminal_setting(setting: str, profile_id: str) -> str:
-	profile = get_full_profile(profile_id)
-	command = [ "gsettings", "get", profile, setting ]
+def get_terminal_setting(setting: str, profile_full: str) -> str:
+	command = [ "gsettings", "get", profile_full, setting ]
 	verbose(f"$ {green(' '.join(command))}")
 
 	value = subprocess.check_output(command, universal_newlines=True).strip()
@@ -70,8 +69,9 @@ def set_theme(theme, profile_id: str):
 
 def print_current_values(profile_id: str):
 	print(f"Profile Id: '{profile_id}'")
+	profile_full = get_full_profile(profile_id)
 	for i, prop_name in enumerate(PROP_NAMES, start=1):
-		value = get_terminal_setting(prop_name, profile_id)
+		value = get_terminal_setting(prop_name, profile_full)
 		print(f"\t{i:2}. {prop_name:40} ---- {value}")
 
 
@@ -85,7 +85,7 @@ def main():
 	parser.add_argument("--theme", nargs='?', const=NOT_SPECIFIED, help="set colors via theme")
 	parser.add_argument("--random", action="store_true", help="set a random theme")
 
-	parser.add_argument("-t", "--transparency", type=int, choices=range(0, 101, 5),
+	parser.add_argument("-t", "--transparency", type=int, default=None, choices=range(0, 101, 5),
 		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
 	parser.add_argument("-z", "--fontsize", type=int, help="set terminal font size")
 
@@ -151,15 +151,15 @@ def main():
 			print(f"Theme NOT found: '{args.theme}'")
 			return
 	elif args.random:
-		print(f"Selecting a random theme!")
-		number = random.randint(0, 49)
+		print(f"Selecting a random theme . . .")
+		number = random.randint(0, len(themes))
 		set_theme(themes[number], profile_id)
 
 	if args.opaque:
 		set_terminal_setting("use-transparent-background", "false", profile_id)
 	elif args.transparent:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
-	elif args.transparency is not None:
+	elif args.transparency != None:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
 		set_terminal_setting("background-transparency-percent", args.transparency, profile_id)
 		print(f"Transparency set to {args.transparency}%")
@@ -170,8 +170,6 @@ def main():
 		print(f"Font size set to {args.fontsize}")
 
 	if args.print:
-		print_current_values(profile_id)
-	else:
 		print_current_values(profile_id)
 
 

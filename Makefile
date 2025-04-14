@@ -2,22 +2,22 @@
 build: zip exe
 
 release: build
-	cp tmt.zip build/tmt
+	cp tmt build/tmt
 
 install: build
-	cp tmt.zip ~/.local/bin/tmt
+	cp tmt ~/.local/bin/
 
 zip: clean
-	cd tmt && zip -r ../tmt-temp.zip . -x "*/__pycache__/*"
+	cd tmtpy && zip -r ../tmt.zip . -x "*/__pycache__/*"
 
 exe:
-	echo '#!/usr/bin/env python3' | cat - tmt-temp.zip > tmt.zip && chmod +x tmt.zip
-	rm tmt-temp.zip
+	echo '#!/usr/bin/env python3' | cat - tmt.zip > tmt && chmod +x tmt
+	rm tmt.zip
 
 deploy: build
-	cp tmt.zip ~/.local/bin/tmt
+	cp tmt ~/.local/bin/
 
 clean:
-	rm -f tmt-temp.zip tmt.zip
-	rm -rf tmt/**/*.pyc
-	rm -rf tmt/**/__pycache__
+	rm -f tmt.zip tmt
+	rm -rf tmtpy/**/*.pyc
+	rm -rf tmtpy/**/__pycache__
