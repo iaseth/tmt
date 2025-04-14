@@ -15,7 +15,7 @@ exe:
 	rm tmt-temp.zip
 
 deploy: build
-	cp tmt.zip ~/dev/bin/tmt
+	cp tmt.zip ~/.local/bin/tmt
 
 clean:
 	rm -f tmt-temp.zip tmt.zip

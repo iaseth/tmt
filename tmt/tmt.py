@@ -17,7 +17,7 @@ PROP_NAMES = [
 	'highlight-background-color', 'highlight-foreground-color',
 	'use-transparent-background', 'background-transparency-percent',
 	'default-size-rows', 'default-size-columns',
-	'cell-height-scale', 'cell-width-scale',
+	'cell-height-scale', 'cell-width-scale', 'font'
 ]
 
 be_verbose = False
@@ -170,6 +170,8 @@ def main():
 		print(f"Font size set to {args.fontsize}")
 
 	if args.print:
+		print_current_values(profile_id)
+	else:
 		print_current_values(profile_id)
 
 
