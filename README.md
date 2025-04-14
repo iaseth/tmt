@@ -46,27 +46,33 @@ tmt --help
 
 ### Examples
 
-- **Change Background and Foreground Colors**:
-  Set the background color to a dark shade (`#1d1f21`) and the foreground (text) color to a light grey (`#c5c8c6`):
-  ```bash
-  tmt -b 1d1f21 -f c5c8c6
-  ```
+- **Using Color Themes**:
 
-  Set the background and/or the foreground color using Tailwind classes:
-  ```bash
-  tmt --css bg-zinc-900 text-zinc-50
-  ```
-
-  Set the background and the foreground color using themes:
   ```bash
   tmt --theme Monokai
   ```
+  Sets the background and the foreground colors to the `Monokai` theme`.
 
-  Chose a random theme:
   ```bash
   tmt --random
   ```
-  Run `tmt --theme` without arguments to list all supported themes.
+  Sets a random theme.
+
+  ```bash
+  tmt --theme
+  ```
+  This will list all the supported themes.
+
+- **Change Background and Foreground Colors**:
+  ```bash
+  tmt -b 1d1f21 -f c5c8c6
+  ```
+  Sets the background color to a dark shade (`#1d1f21`) and the foreground (text) color to a light grey (`#c5c8c6`).
+
+  ```bash
+  tmt --css bg-zinc-900 text-zinc-50
+  ```
+  Sets the background and/or the foreground color using Tailwind classes.
 
   Set the colors to default, i.e., White text on Black background:
   ```bash
