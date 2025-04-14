@@ -45,22 +45,48 @@ tmt [options]
 ### Examples
 
 - **Change Background and Foreground Colors**:
+  Set the background color to a dark shade (`#1d1f21`) and the foreground (text) color to a light grey (`#c5c8c6`):
   ```bash
-  ./tmt -b "#1d1f21" -f "#c5c8c6"
+  tmt -b 1d1f21 -f c5c8c6
   ```
-  Sets the background color to a dark shade (`#1d1f21`) and the foreground (text) color to a light grey (`#c5c8c6`).
+
+  Set the background and the foreground color using Tailwind classes:
+  ```bash
+  tmt --css bg-zinc-900 text-zinc-50
+  ```
+
+  Set the background and the foreground color using themes:
+  ```bash
+  tmt --theme Monokai
+  ```
+  Run `tmt --theme` without arguments to list all themes.
 
 - **Adjust Transparency**:
+  Set the terminal transparency to 20%, making it slightly transparent:
   ```bash
-  ./tmt -t 20
+  tmt -t 20
   ```
-  Sets the terminal transparency to 20%, making it slightly transparent.
 
-- **Change Font Size with Verbose Output**:
+  Turn off Transparency:
   ```bash
-  ./tmt -z 14 -v
+  tmt --opaque
   ```
-  Sets the font size to 14 and enables verbose output to display the actions being performed.
+
+  Turn on Transparency:
+  ```bash
+  tmt --transparent
+  ```
+
+- **Change Font Size**:
+  ```bash
+  tmt -z 12 -v
+  ```
+  Sets the font size to 12.
+
+- **Print current Profile Settings**:
+  ```bash
+  tmt --print
+  ```
 
 ## Build it Yourself
 
@@ -74,7 +100,7 @@ tmt [options]
    ```
 3. **Run the script**:
    ```bash
-   python3 tmt -p
+   python3 tmtpy -p
    ```
 
 ## Notes
