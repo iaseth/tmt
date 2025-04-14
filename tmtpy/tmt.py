@@ -92,7 +92,7 @@ def main():
 	parser.add_argument("--opaque", action="store_true", help="turn off transparency")
 	parser.add_argument("--transparent", action="store_true", help="turn on transparency")
 
-	parser.add_argument("-p", "--print", action="store_true", help="print current values")
+	parser.add_argument("-p", "--print", action="store_true", help="print current profile settings")
 	parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
 	args = parser.parse_args()
 

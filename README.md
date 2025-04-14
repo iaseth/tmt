@@ -31,13 +31,15 @@ wget https://raw.githubusercontent.com/iaseth/tmt/refs/heads/master/build/tmt &&
 Run the script with the desired options to customize your GNOME Terminal settings:
 
 ```bash
-tmt [options]
+tmt --help
 ```
 
 ### Options
 
 - `-b`, `--background`: Set the terminal background color. Accepts a hex color code (e.g., `#000000` or `000000`).
 - `-f`, `--foreground`: Set the terminal foreground (text) color. Accepts a hex color code (e.g., `#ffffff` or `ffffff`).
+- `-c`, `--css`: Set the terminal background/foreground color using Tailwind classes like `bg-slate-900` and `text-zinc-100`.
+- `--theme`: Set the terminal background and foreground color using Themes like `Monokai` and `Solarized Dark`.
 - `-t`, `--transparency`: Set the terminal transparency level. Accepts an integer between 0 and 100, where 0 is fully opaque and 100 is fully transparent.
 - `-z`, `--fontsize`: Set the terminal font size. Accepts an integer representing the desired font size.
 - `-v`, `--verbose`: Enable verbose output to display detailed information about the changes being applied.
@@ -50,7 +52,7 @@ tmt [options]
   tmt -b 1d1f21 -f c5c8c6
   ```
 
-  Set the background and the foreground color using Tailwind classes:
+  Set the background and/or the foreground color using Tailwind classes:
   ```bash
   tmt --css bg-zinc-900 text-zinc-50
   ```
@@ -59,7 +61,17 @@ tmt [options]
   ```bash
   tmt --theme Monokai
   ```
-  Run `tmt --theme` without arguments to list all themes.
+
+  Chose a random theme:
+  ```bash
+  tmt --random
+  ```
+  Run `tmt --theme` without arguments to list all supported themes.
+
+  Set the colors to default, i.e., White text on Black background:
+  ```bash
+  tmt --default
+  ```
 
 - **Adjust Transparency**:
   Set the terminal transparency to 20%, making it slightly transparent:
@@ -79,7 +91,7 @@ tmt [options]
 
 - **Change Font Size**:
   ```bash
-  tmt -z 12 -v
+  tmt --fontsize 12
   ```
   Sets the font size to 12.
 
