@@ -92,6 +92,11 @@ def main():
 	parser.add_argument("--opaque", action="store_true", help="turn off transparency")
 	parser.add_argument("--transparent", action="store_true", help="turn on transparency")
 
+	parser.add_argument("--rows", type=int, help="set default row count")
+	parser.add_argument("--cols", type=int, help="set default columns count")
+	parser.add_argument("--height", type=float, help="set line height")
+	parser.add_argument("--width", type=float, help="set character width")
+
 	parser.add_argument("-p", "--print", action="store_true", help="print current profile settings")
 	parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
 	args = parser.parse_args()
@@ -121,6 +126,10 @@ def main():
 		set_terminal_setting("foreground-color", f"'#fff'", profile_id)
 		set_terminal_setting("use-transparent-background", "false", profile_id)
 		set_terminal_setting("background-transparency-percent", '0', profile_id)
+		set_terminal_setting("default-size-rows", 20, profile_id)
+		set_terminal_setting("default-size-columns", 120, profile_id)
+		set_terminal_setting("cell-height-scale", 1.5, profile_id)
+		set_terminal_setting("cell-width-scale", 1, profile_id)
 		print(f"Set colors to white on black with no transparency.")
 
 	if args.css:
@@ -168,6 +177,19 @@ def main():
 		font_setting = f"Monospace {args.fontsize}"
 		subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "monospace-font-name", font_setting])
 		print(f"Font size set to {args.fontsize}")
+
+	if args.height:
+		set_terminal_setting("cell-height-scale", args.height, profile_id)
+		print(f"Line height set to {args.height}")
+	if args.width:
+		set_terminal_setting("cell-width-scale", args.width, profile_id)
+		print(f"Character width set to {args.width}")
+	if args.rows:
+		set_terminal_setting("default-size-rows", args.rows, profile_id)
+		print(f"Default row count set to {args.rows}")
+	if args.cols:
+		set_terminal_setting("default-size-columns", args.cols, profile_id)
+		print(f"Default column count set to {args.cols}")
 
 	if args.print:
 		print_current_values(profile_id)
