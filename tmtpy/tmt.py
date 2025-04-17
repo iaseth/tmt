@@ -75,6 +75,22 @@ def print_current_values(profile_id: str):
 		print(f"\t{i:2}. {prop_name:40} ---- {value}")
 
 
+def parse_transparency(value):
+	if value.lower() == 'on':
+		return 'on'
+	elif value.lower() == 'off':
+		return 'off'
+	else:
+		try:
+			num = int(value)
+			if 0 <= num <= 100:
+				return num
+			else:
+				raise argparse.ArgumentTypeError("Transparency must be between 0 and 100.")
+		except ValueError:
+			raise argparse.ArgumentTypeError("Transparency must be an integer between 0 and 100, or 'on'/'off'.")
+
+
 def main():
 	parser = argparse.ArgumentParser(description="Modify GNOME Terminal settings.")
 	parser.add_argument("-b", "--background", help="set terminal background color (e.g., '#000000')")
@@ -85,8 +101,8 @@ def main():
 	parser.add_argument("--theme", nargs='?', const=NOT_SPECIFIED, help="set colors via theme")
 	parser.add_argument("--random", action="store_true", help="set a random theme")
 
-	parser.add_argument("-t", "--transparency", type=int, default=None, choices=range(0, 101, 5),
-		help="set terminal transparency (0-100, 0 = opaque, 100 = fully transparent)")
+	parser.add_argument("-t", "--transparency", type=parse_transparency, default=None,
+		help="set terminal transparency (0-100), or 'on' / 'off'")
 	parser.add_argument("-z", "--fontsize", type=int, help="set terminal font size")
 
 	parser.add_argument("--opaque", action="store_true", help="turn off transparency")
@@ -164,9 +180,9 @@ def main():
 		number = random.randint(0, len(themes))
 		set_theme(themes[number], profile_id)
 
-	if args.opaque:
+	if args.opaque or args.transparency == "off":
 		set_terminal_setting("use-transparent-background", "false", profile_id)
-	elif args.transparent:
+	elif args.transparent or args.transparency == "on":
 		set_terminal_setting("use-transparent-background", "true", profile_id)
 	elif args.transparency != None:
 		set_terminal_setting("use-transparent-background", "true", profile_id)
