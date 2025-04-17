@@ -92,10 +92,10 @@ def main():
 	parser.add_argument("--opaque", action="store_true", help="turn off transparency")
 	parser.add_argument("--transparent", action="store_true", help="turn on transparency")
 
-	parser.add_argument("--rows", type=int, help="set default row count")
-	parser.add_argument("--cols", type=int, help="set default columns count")
-	parser.add_argument("--height", type=float, help="set line height")
-	parser.add_argument("--width", type=float, help="set character width")
+	parser.add_argument("-R", "--rows", type=int, help="set default row count")
+	parser.add_argument("-C", "--cols", type=int, help="set default columns count")
+	parser.add_argument("-H", "--height", type=float, help="set line height")
+	parser.add_argument("-W", "--width", type=float, help="set character width")
 
 	parser.add_argument("-p", "--print", action="store_true", help="print current profile settings")
 	parser.add_argument("-v", "--verbose", action="store_true", help="enable verbose output")
